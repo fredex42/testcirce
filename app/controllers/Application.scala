@@ -1,8 +1,10 @@
 package controllers
 
+import cats.data.Validated.{Invalid, Valid}
 import play.api._
 import play.api.mvc._
 import models._
+import play.api.http.Writeable
 
 
 object Application extends Controller {
@@ -12,8 +14,11 @@ object Application extends Controller {
   }
 
   def jsontest = Action { request=>
-    val content = Atom.deserialize(request.body.asText.get)
-    println(content)
-    Ok(request.body.asText.getOrElse("No request body!"))
+    Atom.deserialize(request.body.asText.get) match {
+      case Valid(atom)=>Ok(atom.describe)
+      case Invalid(error)=>BadRequest(error.toString)
+    }
+//
+//    Ok(request.body.asText.getOrElse("No request body!"))
   }
 }

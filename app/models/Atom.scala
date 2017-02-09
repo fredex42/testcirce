@@ -1,8 +1,9 @@
 package models
-import io.circe._, io.circe.jawn.decode
+import io.circe._
+import io.circe.jawn.decode
 import cats.syntax.apply._
 import cats.syntax.all._
-import cats.data.Validated
+import cats.data.{NonEmptyList, Validated}
 /**
   * Created by localhome on 08/02/2017.
   */
@@ -58,7 +59,7 @@ object Atom {
 
     parser.parse(jsonContent) match {
       case Right(content)=>decoder.accumulating(content.hcursor)
-      case Left(error)=>Validated.invalid(error)
+      case Left(error)=>Validated.invalid(NonEmptyList(error,List()))
     }
   }
 }

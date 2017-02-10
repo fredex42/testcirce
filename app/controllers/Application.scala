@@ -5,7 +5,9 @@ import play.api._
 import play.api.mvc._
 import models._
 import play.api.http.Writeable
-
+import implicits.converter._
+import io.circe._
+import io.circe.parser.decode
 
 object Application extends Controller {
 
@@ -14,10 +16,18 @@ object Application extends Controller {
   }
 
   def jsontest = Action { request=>
-    Atom.deserialize(request.body.asText.get) match {
-      case Valid(atom)=>Ok(atom.describe)
-      case Invalid(error)=>BadRequest(error.toString)
+    parser.parse(request.body.asText.get) match {
+      case Right(jsondata)=>
+        jsondata.as[Atom] match {
+          case Right(atom)=>Ok(atom.describe)
+          case Left(errors)=>BadRequest(errors.toString)
+        }
+
     }
+//    Atom.deserialize(request.body.asText.get) match {
+//      case Valid(atom)=>Ok(atom.describe)
+//      case Invalid(error)=>BadRequest(error.toString)
+//    }
 //
 //    Ok(request.body.asText.getOrElse("No request body!"))
   }

@@ -22,7 +22,7 @@ object Application extends Controller {
           case Right(atom)=>Ok(atom.describe)
           case Left(errors)=>BadRequest(errors.toString)
         }
-
+      case Left(errors)=>BadRequest(errors.toString)
     }
 //    Atom.deserialize(request.body.asText.get) match {
 //      case Valid(atom)=>Ok(atom.describe)

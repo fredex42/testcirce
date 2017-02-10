@@ -5,7 +5,7 @@ import play.api._
 import play.api.mvc._
 import models._
 import play.api.http.Writeable
-import implicits.converter._
+import implicits.macroconverter._
 import io.circe._
 import io.circe.parser.decode
 
@@ -24,11 +24,5 @@ object Application extends Controller {
         }
       case Left(errors)=>BadRequest(errors.toString)
     }
-//    Atom.deserialize(request.body.asText.get) match {
-//      case Valid(atom)=>Ok(atom.describe)
-//      case Invalid(error)=>BadRequest(error.toString)
-//    }
-//
-//    Ok(request.body.asText.getOrElse("No request body!"))
   }
 }

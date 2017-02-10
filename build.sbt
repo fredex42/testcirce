@@ -12,4 +12,7 @@ unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
-libraryDependencies +=   "io.circe"                 %% "circe-parser"                %  "0.6.1"
+libraryDependencies +=   "io.circe"  %% "circe-parser"  %  "0.6.1"
+
+// https://mvnrepository.com/artifact/com.chuusai/shapeless_2.9.2
+libraryDependencies += "com.chuusai" %% "shapeless" % "2.3.2"
